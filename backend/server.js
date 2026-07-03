@@ -38,9 +38,10 @@ const server = http.createServer((req, res) => {
     req.on('data', (c) => (body += c));
     req.on('end', () => {
       const { text } = JSON.parse(body || '{}');
-      if (!text) return send(res, 400, { error: 'text required' });
+      if (!text || text === '') return send(res, 400, { error: 'text required' });
       const todo = { id: nextId++, text, done: false };
       todos.push(todo);
+      console.log("todo",todo)
       send(res, 201, todo);
     });
     return;
