@@ -1,0 +1,32 @@
+# Cursor Workspace Rules - ClickUp Git Sync
+
+This workspace uses the `clickup-git-sync` CLI (run via `npx`) to sync git
+commits and time tracking to ClickUp. All logic lives in the CLI; these rules
+only tell you when to invoke it.
+
+> First-time setup (once per machine): `npx clickup-git-sync setup`
+> Project setup (once per repo): `npx clickup-git-sync init`
+
+## Slash Commands
+
+### `/git-commit`
+When the user triggers `/git-commit`:
+1. Inspect uncommitted work with `git status` and `git diff`.
+2. Draft a clean, descriptive commit message from the changes.
+3. Suggest a category (Planning, Frontend, Backend, Support, Monitor, Testing, Meeting) based on the file types.
+4. Suggest tracked hours (0.5h docs/typo, 1-2h moderate, 3h+ major).
+5. Show the proposed message, category, and hours and ask the user to confirm.
+6. On confirmation run the CLI (it stages, commits, and syncs to ClickUp):
+   ```bash
+   npx clickup-git-sync commit --message "<msg>" --category "<category>" --hours <hours> --stage --yes
+   ```
+   To commit without logging time, add `--no-log`.
+
+### `/clickup-log [task] [hours] [category]`
+When the user triggers `/clickup-log` or asks to log time directly (no commit):
+1. Determine task name, hours, and category (Planning, Frontend, Backend, Support, Monitor, Testing, Meeting); ask if missing.
+2. Run:
+   ```bash
+   npx clickup-git-sync log --task "<task>" --category "<category>" --hours <hours>
+   ```
+3. Confirm success to the user.
