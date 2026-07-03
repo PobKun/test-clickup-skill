@@ -1,3 +1,6 @@
 {
-  "CLICKUP_LIST_NAME": "[Project XL] Test-Clickup-Skill"
+  "CLICKUP_LIST_NAME": "[Project XL] Test-Clickup-Skill",
+  "CLICKUP_SPACE_NAME": "True Money",
+  "CLICKUP_SPACE_ID": "90182654103",
+  "CLICKUP_FOLDER_PREFIX": "[True] Support List"
 }

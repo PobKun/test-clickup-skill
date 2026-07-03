@@ -13,7 +13,8 @@ the `clickup-git-sync` CLI. All logic lives in the CLI (`npx clickup-git-sync`).
 When the user triggers `/git-commit`:
 1. Inspect uncommitted work with `git status` and `git diff`.
 2. Draft a clean, descriptive commit message from the changes.
-3. Suggest a category (Planning, Frontend, Backend, Support, Monitor, Testing, Meeting) based on the file types.
+3. Pick the category based on the file types — use ONE of these EXACT names:
+   Main Task [Support], Main Task [Backend], Main Task [Frontend], Main Task [Planning and Learning], Main Task [Monitor], Main Task [Testing], Main Task [Meeting]
 4. Suggest tracked hours (0.5h docs/typo, 1-2h moderate, 3h+ major).
 5. Show the proposed message, category, and hours and ask the user to confirm.
 6. On confirmation run the CLI (it stages, commits, and syncs to ClickUp):
