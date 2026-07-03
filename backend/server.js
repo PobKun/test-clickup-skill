@@ -22,6 +22,11 @@ function send(res, status, data) {
 const server = http.createServer((req, res) => {
   if (req.method === 'OPTIONS') return send(res, 204, {});
 
+  // GET /health — liveness probe
+  if (req.method === 'GET' && req.url === '/health') {
+    return send(res, 200, { status: 'ok' });
+  }
+
   // GET /todos — list all
   if (req.method === 'GET' && req.url === '/todos') {
     return send(res, 200, todos);
