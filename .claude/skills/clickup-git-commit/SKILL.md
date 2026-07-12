@@ -12,9 +12,15 @@ the `clickup-git-sync` CLI. All logic lives in the CLI (`npx @nextzy-tech/clicku
 
 When the user triggers `/clickup-git-commit`:
 1. Inspect uncommitted work with `git status` and `git diff`.
-2. Draft a clean, descriptive commit message from the changes.
+2. Draft the commit as TWO parts:
+   - a **short subject** (`--message`): ~50 chars, ideally ≤72, imperative mood,
+     plain language — this becomes both the git subject line and the ClickUp task name,
+     so it must NOT be long or full of jargon.
+   - the **details** (`--description`): everything longer — what changed, why, key
+     modules/impact. This goes into the git commit body AND the ClickUp task description.
+   If the change is trivial (typo/one-liner), the details can be omitted.
 3. Pick the category based on the file types — use ONE of these EXACT names:
-   Main Task [Support], Main Task [Backend], Main Task [Frontend], Main Task [Planning and Learning], Main Task [Infrastructure], Main Task [Monitor], Main Task [Testing], Main Task [Meeting]
+   Main Task [Support], Main Task [Backend], Main Task [Frontend], Main Task [Planning and Learning], Main Task [Infrastructure], Main Task [Monitor], Main Task [Testing], Main Task [Meeting], Main Task [Review code & logic]
 4. Estimate the tracked time from the ACTUAL complexity of the diff you just
    read — weigh how many files/modules changed, how much real logic vs
    boilerplate, and the risk involved; don't just count lines. Use the line-count
@@ -23,11 +29,12 @@ When the user triggers `/clickup-git-commit`:
    Time can be given as `--hours`/`-h` and/or `--minutes`/`--min` (they are summed).
 5. Ask which date the work should be logged on: press Enter/skip for **today**, or
    give a past date (backdate) or future date in YYYY-MM-DD.
-6. Show the proposed message, category, time, and date and ask the user to confirm.
+6. Show the proposed subject, details, category, time, and date and ask the user to confirm.
 7. On confirmation run the CLI (it stages, commits, and syncs to ClickUp):
    ```bash
-   npx @nextzy-tech/clickup-git-sync commit --message "<msg>" --category "<category>" --hours <h> --min <m> --stage --yes
+   npx @nextzy-tech/clickup-git-sync commit --message "<short subject>" --description "<details>" --category "<category>" --hours <h> --min <m> --stage --yes
    ```
+   - Keep `--message` short; put the long explanation in `--description` (omit it for trivial changes).
    - Time: use `--hours`/`-h` and/or `--minutes`/`--min` (e.g. `-h 1 --min 30` = 1.5h).
    - To log on a specific day, add `--start-date YYYY-MM-DD` (and optionally
      `--end-date YYYY-MM-DD` for a range). Omit both for today.
